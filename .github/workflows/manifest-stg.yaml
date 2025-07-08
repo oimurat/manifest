@@ -59,5 +59,4 @@ jobs:
                   GITHUB_APP_TOKEN: ${{ steps.app-token.outputs.token }}
               run: |
                   echo "$GITHUB_APP_TOKEN" | gh auth login --with-token
-                  gh pr review "$PR_URL" --approve
                   gh pr merge --merge --auto --delete-branch "$PR_URL"
