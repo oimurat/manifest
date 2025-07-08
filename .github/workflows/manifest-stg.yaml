@@ -20,7 +20,6 @@ jobs:
             - name: Set Env # 環境変数の設定
               run: |
                   echo "DATE_TAG=${{ github.event.client_payload.date }}" >> $GITHUB_ENV
-
             - name: Update manifests # 複数のマニフェストを更新
               uses: mikefarah/yq@master # yqをセットアップするためusesを追加
               with:
@@ -33,6 +32,17 @@ jobs:
                         echo "Updating image in ${FILE_PATH} to ${IMAGE_FULL_NAME}"
                         yq eval '.deployment.image.name = strenv(IMAGE_FULL_NAME)' -i "$FILE_PATH"
                       done
+            - name: Create Pull Request # プルリクエストの作成
+              id: cpr
+              uses: peter-evans/create-pull-request@v7
+              with:
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  commit-message: "auto update manifest stg"
+                  title: "GithubAppを用いた自動マージ(ステージング)"
+                  body: "This PR was created automatically by GitHub Actions."
+                  branch: update-image-${{ env.DATE_TAG }}
+                  base: stg
+                  delete-branch: true
 
             - name: create github app token # GitHub Appトークンの作成
               uses: actions/create-github-app-token@v1
@@ -40,18 +50,6 @@ jobs:
               with:
                   app-id: ${{ secrets.APP_ID }}
                   private-key: ${{ secrets.PRIVATE_KEY }}
-
-            - name: Create Pull Request # プルリクエストの作成
-              id: cpr
-              uses: peter-evans/create-pull-request@v7
-              with:
-                  token: ${{ steps.app-token.outputs.token }}
-                  commit-message: "auto update manifest stg"
-                  title: "GithubAppを用いた自動マージ(ステージング)"
-                  body: "This PR was created automatically by GitHub Actions."
-                  branch: update-image-${{ env.DATE_TAG }}
-                  base: stg
-                  delete-branch: true
 
             - name: auto-merge # プルリクエストの自動マージ
               env:
