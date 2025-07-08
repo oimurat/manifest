@@ -1,0 +1,25 @@
+alertmanager:
+  enabled: false
+grafana:
+  enabled: false
+prometheus:
+  prometheusSpec:
+    podMetadata:
+      labels:
+        sidecar.istio.io/inject: "true"
+    externalLabels:
+      cluster: development
+    thanos:
+      image: quay.io/thanos/thanos:v0.38.0
+      version: v0.38.0
+      objectStorageConfig:
+        secret:
+          type: OCI
+          config:
+            provider: "instance-principal"
+            bucket: "thanos-metrics-storage"
+            compartment_ocid: "ocid1.compartment.oc1..aaaaaaaagmkqp2efcynmjicfgucpd4b3i6mzurw3ndfjy7my7qajy32dmhkq"
+  thanosService:
+    enabled: true
+    annotations:
+      networking.istio.io/exportTo: "*"
