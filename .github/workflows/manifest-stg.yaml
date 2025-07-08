@@ -29,8 +29,9 @@ jobs:
                       for SERVICE in $SERVICES
                       do
                         FILE_PATH="values/internal/${SERVICE}/values-dev.yaml"
-                        echo "Updating image tag in ${FILE_PATH}..."
-                        yq eval ".deployment.image.name = 'nrt.ocir.io/nrcmxxv7sjse/ec_service_test:stg-${SERVICE}-${DATE_TAG}'" -i "$FILE_PATH"
+                        export IMAGE_FULL_NAME="nrt.ocir.io/nrcmxxv7sjse/ec_service_test:stg-${SERVICE}-${DATE_TAG}"
+                        echo "Updating image in ${FILE_PATH} to ${IMAGE_FULL_NAME}"
+                        yq eval '.deployment.image.name = strenv(IMAGE_FULL_NAME)' -i "$FILE_PATH"
                       done
 
             - name: Create Pull Request # プルリクエストの作成
