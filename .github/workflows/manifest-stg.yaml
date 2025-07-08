@@ -9,6 +9,7 @@ on:
 permissions:
     contents: write
     pull-requests: write
+    administration: write
 
 jobs:
     update-manifest:
@@ -32,17 +33,6 @@ jobs:
                         echo "Updating image in ${FILE_PATH} to ${IMAGE_FULL_NAME}"
                         yq eval '.deployment.image.name = strenv(IMAGE_FULL_NAME)' -i "$FILE_PATH"
                       done
-            - name: Create Pull Request # プルリクエストの作成
-              id: cpr
-              uses: peter-evans/create-pull-request@v7
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  commit-message: "auto update manifest stg"
-                  title: "GithubAppを用いた自動マージ(ステージング)"
-                  body: "This PR was created automatically by GitHub Actions."
-                  branch: update-image-${{ env.DATE_TAG }}
-                  base: stg
-                  delete-branch: true
 
             - name: create github app token # GitHub Appトークンの作成
               uses: actions/create-github-app-token@v1
@@ -50,6 +40,20 @@ jobs:
               with:
                   app-id: ${{ secrets.APP_ID }}
                   private-key: ${{ secrets.PRIVATE_KEY }}
+                  permissions: '{"administration":"write","contents":"write","pull_requests":"write"}'
+
+
+            - name: Create Pull Request # プルリクエストの作成
+              id: cpr
+              uses: peter-evans/create-pull-request@v7
+              with:
+                  token: ${{ steps.app-token.outputs.token }}
+                  commit-message: "auto update manifest stg"
+                  title: "GithubAppを用いた自動マージ(ステージング)"
+                  body: "This PR was created automatically by GitHub Actions."
+                  branch: update-image-${{ env.DATE_TAG }}
+                  base: stg
+                  delete-branch: true
 
             - name: auto-merge # プルリクエストの自動マージ
               env:
@@ -57,5 +61,4 @@ jobs:
                   GITHUB_APP_TOKEN: ${{ steps.app-token.outputs.token }}
               run: |
                   echo "$GITHUB_APP_TOKEN" | gh auth login --with-token
-                  gh pr review "$PR_URL" --approve
-                  gh pr merge --merge --auto --delete-branch "$PR_URL"
+                  gh pr merge "$PR_URL" --admin --merge --delete-branch
