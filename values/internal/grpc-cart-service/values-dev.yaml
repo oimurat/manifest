@@ -1,22 +1,22 @@
 deployment:
-    name: grpc-cart-service
-    replicaCount: 1
-    image:
-        name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:stg-grpc-cart-service-000000
-    ports:
-        containerPort: 50051
-        protocol: TCP
-    resources:
-        requests:
-            cpu: "100m"
-            memory: "64Mi"
-        limits:
-            cpu: "150m"
-            memory: "128Mi"
+  name: grpc-cart-service
+  replicaCount: 1
+  image:
+    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:stg-grpc-cart-service-stg-20250708-062058
+  ports:
+    containerPort: 50051
+    protocol: TCP
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "64Mi"
+    limits:
+      cpu: "150m"
+      memory: "128Mi"
 service:
-    name: grpc-cart-service
-    ports:
-        port: 50051
-        targetPort: 50051
+  name: grpc-cart-service
+  ports:
+    port: 50051
+    targetPort: 50051
 selector:
-    app: grpc-cart-service
+  app: grpc-cart-service
