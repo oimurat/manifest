@@ -2,7 +2,7 @@ deployment:
   name: grpc-product-service
   replicaCount: 1
   image:
-    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:main-grpc-product-service-
+    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:main-grpc-product-service-main-v1.0
   ports:
     containerPort: 50052
     protocol: TCP

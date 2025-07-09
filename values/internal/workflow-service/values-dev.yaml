@@ -4,7 +4,7 @@ deployment:
   env:
     temporalAddress: temporal:7233
   image:
-    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:main-workflow-service-
+    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:main-workflow-service-main-v1.0
   ports:
     containerPort: 50060
     protocol: TCP
