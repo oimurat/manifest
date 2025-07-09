@@ -19,7 +19,7 @@ jobs:
 
             - name: Set Env # 環境変数の設定
               run: |
-                  echo "VERSION_TAG=${{ github.event.client_payload.date }}" >> $GITHUB_ENV
+                  echo "VERSION_TAG=${{ github.event.client_payload.version }}" >> $GITHUB_ENV
 
             - name: Update manifest frontend # マニフェストの更新
               uses: mikefarah/yq@master
