@@ -2,7 +2,7 @@ deployment:
   name: grpc-cart-service
   replicaCount: 1
   image:
-    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:stg-grpc-cart-service-stg-000000
+    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:main-grpc-cart-service-
   ports:
     containerPort: 50051
     protocol: TCP
