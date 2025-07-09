@@ -2,7 +2,7 @@ deployment:
   name: graphql-service
   replicaCount: 1
   image:
-    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:graphql-service-main-v1.2
+    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:graphql-service-main-v2.0
   ports:
     containerPort: 80
     protocol: TCP
