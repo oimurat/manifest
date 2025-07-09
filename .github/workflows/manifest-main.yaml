@@ -21,7 +21,7 @@ jobs:
               run: |
                   echo "VERSION_TAG=${{ github.event.client_payload.version }}" >> $GITHUB_ENV
 
-            - name: Update manifest frontend # マニフェストの更新
+            - name: Update manifests # 複数のマニフェストを更新
               uses: mikefarah/yq@master
               with:
                   cmd: |
