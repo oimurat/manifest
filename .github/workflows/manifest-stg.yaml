@@ -20,6 +20,7 @@ jobs:
             - name: Set Env # 環境変数の設定
               run: |
                   echo "DATE_TAG=${{ github.event.client_payload.date }}" >> $GITHUB_ENV
+
             - name: Update manifests # 複数のマニフェストを更新
               uses: mikefarah/yq@master # yqをセットアップするためusesを追加
               with:
