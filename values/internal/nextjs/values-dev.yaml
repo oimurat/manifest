@@ -2,4 +2,4 @@ deployment:
   name: nextjs
   replicaCount: 1
   image:
-    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:main-nextjs-
+    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:main-nextjs-main-v1.0
