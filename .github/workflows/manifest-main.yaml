@@ -29,7 +29,7 @@ jobs:
                       for SERVICE in $SERVICES
                       do
                         FILE_PATH="values/internal/${SERVICE}/values-dev.yaml"
-                        export IMAGE_FULL_NAME="nrt.ocir.io/nrcmxxv7sjse/ec_service_test:main-${SERVICE}-${DATE_TAG}"
+                        export IMAGE_FULL_NAME="nrt.ocir.io/nrcmxxv7sjse/ec_service_test:main-${SERVICE}-${VERSION_TAG}"
                         echo "Updating image in ${FILE_PATH} to ${IMAGE_FULL_NAME}"
                         yq eval '.deployment.image.name = strenv(IMAGE_FULL_NAME)' -i "$FILE_PATH"
                       done
