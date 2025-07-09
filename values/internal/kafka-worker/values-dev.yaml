@@ -4,7 +4,7 @@ deployment:
   env:
     bootstrapServers: kafka-service:9092
   image:
-    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:stg-kafka-worker-stg-20250709-072323
+    name: nrt.ocir.io/nrcmxxv7sjse/ec_service_test:kafka-worker-stg-20250709-083534
 service:
   name: kafka-worker
   ports:
